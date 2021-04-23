@@ -1,16 +1,11 @@
-# Stage `r stage_code`
+## Stage `r stage_code` Splits Analysis
 
-Stage results and timing analysis
+Reports on splits
 
-```{r template_import, results=FALSE, message=FALSE, warning=FALSE}
+```{r results=FALSE, message=FALSE, warning=FALSE}
 #library(formattable)
 
-#stage_code= 'SS1'
-#stage_code={stage_code}
-
-stageId = stages_lookup[[stage_code]]
-
-stage_times = get_stage_times(eventId, stageId)
+#stage_code = 'SS2'
 
 splits = get_splits(eventId, stageId)
 splits_locations = splits$splitPoints
@@ -22,6 +17,7 @@ split_names = splits_locations$splitname
 split_cols = get_split_cols(splits)
 split_names = c(split_names, 'split_N')
 ```
+
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE,}
 full_splits_wide = get_splits_wide(splits, wrc_entries) %>%
@@ -40,7 +36,7 @@ full_durations_wide = get_split_duration(full_splits_wide,
                                           split_names, id_col='code')
 ```
 
-## Stage Split Times and Overall Stage Result
+### Stage Split Times and Overall Stage Result
 
 Summary of stage split times and overall stage result:
 
@@ -55,11 +51,11 @@ kable(stage_split_results)
 ```
 
 
-## Split Time Rankings
+### Split Time Rankings
 
 Rank of each split time:
 
-```{r echo-FALSE, message=FALSE, warning=FALSE, error=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}
 split_ranks = get_split_rank(full_splits_wide, split_names) %>%
                 select(code, all_of(split_names))
 
@@ -69,7 +65,7 @@ formattable(split_ranks, align='c',
                  entryId=FALSE))
 ```
 
-## Ultimate Stage Comparisons
+### Ultimate Stage Comparisons
 
 Split time comparisons relative to various ultimage stage time calculations.
 
@@ -134,7 +130,7 @@ ultimate_actual = full_splits_wide %>%
 
 ```
 
-### Ultimate Actuals
+#### Ultimate Actuals
 
 Driver times compared to the first ranked recorded split time at each split:
 
@@ -145,7 +141,7 @@ formattable(ultimate_actual, align='c',
 ```
 
 
-### Ultimate Sections
+#### Ultimate Sections
 
 Split durations rebased relative to the fastest transit of each split section:
 
@@ -156,7 +152,7 @@ formattable(ultimate_between_split, align='c',
 ```
 
 
-### Ultimate Accumulated Sections
+#### Ultimate Accumulated Sections
 
 Actual split times relative to the accumulated ultimate split section times:
 
@@ -167,11 +163,3 @@ formattable(ultimate_accumulated, align='c',
 ```
 
 
-```{r driverlooper, message=FALSE, echo=FALSE, error=FALSE, warning=FALSE, results='asis'}
-for (driverEntryId in wrc_entries){
-  src = knit_expand("driver_template.Rmd")
-  cat(knit_child(text=src,
-                 options = list(echo=FALSE, warning=FALSE, error=FALSE),
-                 quiet=TRUE))
-}
-```

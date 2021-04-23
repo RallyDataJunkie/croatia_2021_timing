@@ -1,0 +1,13 @@
+## Driver Report, `r stage_code`  - `r driverCode`
+
+Stage report for `r driverCode`.
+
+```{r echo=FALSE, message=FALSE, error=FALSE, results='asis'}
+driver_rebased_gap = rebase(top10_stage_times, driverCode, rebase_cols,
+                           id_col='Code')
+
+driver_rebased_gap %>%
+  formattable(align='c',
+              list(Gap = pm_color_bar2(),
+                   entryId=FALSE))
+```

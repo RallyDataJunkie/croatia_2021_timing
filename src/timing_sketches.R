@@ -126,3 +126,44 @@ ultimate_rebaser = function(df, ultimate_df, split_names,
       rebase(ultimate_col, split_names, id_col='code')
   }
 
+#https://www.displayr.com/formattable/
+unit.scale = function(x) (x - min(x)) / (max(x) - min(x))
+
+new_color_bar <- function(color = "lightgreen", ...){
+  formatter("span",
+            style = function(x) style(
+              display = "inline-block",
+              direction = "rtl", 
+              `unicode-bidi` = "plaintext",
+              "border-radius" = "4px",
+              "background-color" = color,
+              width = percent(proportion(abs(as.numeric(x)), ...))
+            ))
+}
+
+bg = function(start, end, color, ...) {
+  paste("linear-gradient(90deg,transparent ",percent(start),",",
+        color, percent(start), ",", color, percent(end),
+        ", transparent", percent(end),")")
+} 
+
+color_bar2 =  function (color = "lightgray", fun = "proportion", ...) 
+{
+  fun <- match.fun(fun)
+  formatter("span", style = function(x) style(display = "inline-block",
+                                              `unicode-bidi` = "plaintext", 
+                                              "background" = bg(1-fun(as.numeric(x), ...), 1, color), "width"="100%" ))
+}
+
+pm_color_bar2 <- function(color1 = "lightgreen", color2 = "pink", ...){
+  formatter("span",
+            style = function(x) style(
+              display = "inline-block",
+              color = ifelse(x> 0,'green',ifelse(x<0,'red','lightgrey')),
+              "text-align" = ifelse(x > 0, 'left', ifelse(x<0, 'right', 'center')),
+              "width"='100%',
+              "background" = bg(ifelse(x >= 0, 0.5,xnormalize(x)),
+                                ifelse(x >= 0,xnormalize(x),0.5),
+                                ifelse(x >= 0, color1, color2))
+            ))
+}
