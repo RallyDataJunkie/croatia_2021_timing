@@ -33,7 +33,7 @@ wrc_entries = wrc$entryId
 # THe API incorrectly seems to return data for splits if there are no splits
 # A check would be to see if any split dist > stage dist
 stage_list=list("SS1", "SS2", "SS3", "SS4", "SS5", "SS6", "SS7", "SS8")
-stage_list=list("SS1","SS2")
+#stage_list=list("SS1","SS2")
 for (stage_code in stage_list){
   stageId = stages_lookup[[stage_code]]
   stage_times = get_stage_times(eventId, stageId)
