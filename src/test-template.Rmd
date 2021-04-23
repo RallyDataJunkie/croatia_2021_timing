@@ -1,0 +1,177 @@
+# Stage `r stage_code`
+
+Stage results and timing analysis
+
+```{r template_import, results=FALSE, message=FALSE, warning=FALSE}
+#library(formattable)
+
+#stage_code= 'SS1'
+#stage_code={stage_code}
+
+stageId = stages_lookup[[stage_code]]
+
+stage_times = get_stage_times(eventId, stageId)
+
+splits = get_splits(eventId, stageId)
+splits_locations = splits$splitPoints
+splits_list = splits_locations$splitPointId
+splits_locations$splitname = sapply(splits_locations$splitPointId,
+                                 get_split_label)
+
+split_names = splits_locations$splitname
+split_cols = get_split_cols(splits)
+split_names = c(split_names, 'split_N')
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,}
+full_splits_wide = get_splits_wide(splits, wrc_entries) %>%
+                      widen_splits_stage_times(stage_times) %>%
+                      map_split_codes(splits_list) %>% 
+                      map_driver_names(cars)  %>%
+              # Filter out any driver with an excessive delta
+              #https://dplyr.tidyverse.org/reference/filter_all.html
+                      #filter_at(vars(starts_with("split_")),
+                      #          all_vars(abs(.) <20))
+                      filter(diffFirstMs<30000)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+full_durations_wide = get_split_duration(full_splits_wide,
+                                          split_names, id_col='code')
+```
+
+## Stage Split Times and Overall Stage Result
+
+Summary of stage split times and overall stage result:
+
+```{r}
+stage_split_results = full_splits_wide %>% 
+                  mutate(diffFirstS=diffFirstMs/1000) %>% 
+                  select(c(code,  all_of(split_names),
+                         diffFirstS, position)) %>% 
+                  arrange(position)
+
+kable(stage_split_results)
+```
+
+
+## Split Time Rankings
+
+Rank of each split time:
+
+```{r echo-FALSE, message=FALSE, warning=FALSE, error=FALSE}
+split_ranks = get_split_rank(full_splits_wide, split_names) %>%
+                select(code, all_of(split_names))
+
+split_N_col_idx = which(colnames(split_ranks) == 'split_N')[[1]]
+formattable(split_ranks, align='c',
+            list(area(col = 2:split_N_col_idx) ~ color_tile2(c("red",'white', "forestgreen")),
+                 entryId=FALSE))
+```
+
+## Ultimate Stage Comparisons
+
+Split time comparisons relative to various ultimage stage time calculations.
+
+These views provide various ways of comparing the performance of each driver to various ghost drivers:
+
+- best recorded split time at each split (*ultimate actuals*): gives an estimate of how well the driver's split times compare with each first ranked split time (time into stage at each split);
+- fastest time going from one split to the next (*ultimate sections*): gives an estimate of how quickly each driver completed each split section relative to the quickest time recorded completing that split section (time taken to go from one split point to the next);
+- *accumulated ultimate sections* times: gives and estimate of how quickly the driver is going relative to the fastest possible completion of the stage based on accumulated ultimate split section times.
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+ultimate_splits_long = full_durations_wide %>%
+                     pivot_longer(all_of(split_names),
+                                  names_to = "splitname",
+                                  values_to = "sectionDurationS") %>%
+                     select(splitname, sectionDurationS) %>%
+                     # Defensive measure
+                     filter(!is.na(sectionDurationS) & sectionDurationS>0) %>%
+                     group_by(splitname) %>% 
+                     summarise(ultimate = min(sectionDurationS,
+                                              na.rm = TRUE)) %>%
+                     mutate(ultimateElapsed = cumsum(ultimate))
+
+ultimate_wide_durations = ultimate_splits_long %>% 
+                  select(splitname, ultimate) %>%
+                  pivot_wider(names_from = splitname,
+                              values_from = ultimate) %>%
+                  mutate(code='ultimate')
+
+ultimate_between_split = full_durations_wide %>%
+                            select(code, all_of(split_names)) %>% 
+                            bind_rows(ultimate_wide_durations) %>%
+                            rebase('ultimate', split_names,
+                                   id_col='code')
+
+ultimate_wide_elapsed = ultimate_widen(ultimate_splits_long,
+                                       'ultimateElapsed', 'ultimate')
+
+ultimate_accumulated = full_splits_wide %>% 
+                          ultimate_rebaser(ultimate_wide_elapsed,
+                                         split_names, 'ultimate')
+
+actual_ultimate = full_splits_wide %>% 
+                      select(code, all_of(split_names)) %>% 
+                      # Make long
+                      select(all_of(as.character(split_names)),
+                             code) %>%
+                      pivot_longer(as.character(split_names),
+                                   names_to = "splitname",
+                                   values_to = "sectionDurationS") %>%
+                      group_by(splitname) %>%
+                      summarise(actualUltimate = min(sectionDurationS,
+                                                     na.rm=TRUE))
+
+ultimate_splits_long$actual = actual_ultimate$actualUltimate
+ultimate_wide_actual = ultimate_widen(ultimate_splits_long,
+                                      'actual',
+                                      'ultimate')
+ultimate_actual = full_splits_wide %>% 
+                      ultimate_rebaser(ultimate_wide_actual,
+                                       split_names, 'ultimate')
+
+```
+
+### Ultimate Actuals
+
+Driver times compared to the first ranked recorded split time at each split:
+
+```{r}
+formattable(ultimate_actual, align='c',
+            list(area(col = 2:split_N_col_idx) ~ color_tile2(c("red",'white', "forestgreen")),
+                 entryId=FALSE))
+```
+
+
+### Ultimate Sections
+
+Split durations rebased relative to the fastest transit of each split section:
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+formattable(ultimate_between_split, align='c',
+            list(area(col = 2:split_N_col_idx) ~ color_tile2(c("red",'white',"forestgreen")),
+                 entryId=FALSE))
+```
+
+
+### Ultimate Accumulated Sections
+
+Actual split times relative to the accumulated ultimate split section times:
+
+```{r}
+formattable(ultimate_accumulated, align='c',
+            list(area(col = 2:split_N_col_idx) ~ color_tile2(c("red",'white', "forestgreen")),
+                 entryId=FALSE))
+```
+
+
+```{r driverlooper, message=FALSE, echo=FALSE, error=FALSE, warning=FALSE, results='asis'}
+for (driverEntryId in wrc_entries){
+  src = knit_expand("driver_template.Rmd")
+  cat(knit_child(text=src,
+                 options = list(echo=FALSE, warning=FALSE, error=FALSE),
+                 quiet=TRUE))
+}
+```
