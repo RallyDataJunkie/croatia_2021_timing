@@ -37,6 +37,7 @@ full_splits_wide = get_splits_wide(splits, wrc_entries) %>%
                       widen_splits_stage_times(stage_times) %>%
                       map_split_codes(splits_list) %>% 
                       map_driver_names(cars)  %>%
+                      arrange(position) %>%
               # Filter out any driver with an excessive delta
               #https://dplyr.tidyverse.org/reference/filter_all.html
                       #filter_at(vars(starts_with("split_")),
@@ -116,7 +117,7 @@ formattable(split_ranks, align='c',
 
 ### Split Section Pace
 
-Pace is measured in seconds per kilometer, which is to say, how long it takes to complete each kilometer:
+Pace is measured in seconds per kilometer, which is to say, how long it takes to complete each kilometer (*lower is better*):
 
 ```{r}
 kable(section_pace_wide %>% mutate_if(is.numeric, round, digits = 2) )
@@ -195,6 +196,7 @@ caption = paste0(stage_info_$code, ' ultimate split actual deltas')
 ultimate_actual %>%
                   filter_at(vars(starts_with("split_")),
                                 all_vars(! is.na(.)))  %>%
+        mutate_if(is.numeric, round, digits = 1) %>%
 formattable( align='c',
             list(area(col = 2:split_N_col_idx) ~ color_tile2(c("red",'white', "forestgreen")),
                  entryId=FALSE), caption=caption)
@@ -209,7 +211,8 @@ Split durations rebased relative to the fastest transit of each split section:
 caption = paste0(stage_info_$code, ' ultimate section deltas')
 ultimate_between_split %>%
                   filter_at(vars(starts_with("split_")),
-                                all_vars(! is.na(.)))  %>%
+                                all_vars(! is.na(.)))   %>%
+      mutate_if(is.numeric, round, digits = 1) %>%
 formattable(align='c',
             list(area(col = 2:split_N_col_idx) ~ color_tile2(c("red",'white',"forestgreen")),
                  entryId=FALSE), caption=caption)
@@ -225,26 +228,33 @@ caption = paste0(stage_info_$code, ' accumulated ultimate section deltas')
 ultimate_accumulated %>%
                   filter_at(vars(starts_with("split_")),
                                 all_vars(! is.na(.)))  %>%
+        mutate_if(is.numeric, round, digits = 1) %>%
 formattable( align='c',
             list(area(col = 2:split_N_col_idx) ~ color_tile2(c("red",'white', "forestgreen")),
                  entryId=FALSE), caption=caption)
 ```
 
-### Split Section Pace
+### Split Section Pace Distribution
 
 Distribution of pace values for each split section:
 
-```{r}
+```{r warning=FALSE, error=FALSE, message=FALSE}
+full_split_dists = map_df(full_split_distances, ~as.data.frame(.x), .id="splitname") %>% rename(section_distance = .x) %>% 
+  mutate(distance = cumsum(section_distance))
 #Pace calculation
 section_pace_long = section_pace_wide %>% 
                   head(10) %>%
                 gather(splitname, pace, split_names) %>%
-                merge(splits_locations[,c('splitname',
-                                          'start_dist', 'distance')],
+                #merge(splits_locations[,c('splitname',
+                #                          'start_dist', 'distance')],
+                merge(full_split_dists,
                           by='splitname')
 
-ggplot(section_pace_long[section_pace_long$pace<40,],
+# TO DO start_dist as a lag...
+# TO DO - the pace limit shoul be better set?
+#ggplot(section_pace_long[section_pace_long$pace<40,],
+ggplot(section_pace_long,
        aes(x=distance, y=pace)) +
-    geom_boxplot(aes(group=distance))
+    geom_boxplot(aes(group=distance)) +theme_bw() +ggtitle(paste0(stage_code, ": pace on each split,"))
 ```
 
