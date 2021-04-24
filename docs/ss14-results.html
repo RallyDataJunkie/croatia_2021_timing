@@ -50,6 +50,24 @@
 
 
 
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="libs/htmlwidgets-1.5.3.9000/htmlwidgets.js"></script>
+<script src="libs/formattable_widget-binding-0.2.1/formattable_widget.js"></script>
 
 
 
@@ -69,6 +87,13 @@
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="" data-path="overall-standings.html"><a href="overall-standings.html"><i class="fa fa-check"></i>Overall Standings</a>
+<ul>
+<li class="chapter" data-level="0.1" data-path="overall-standings.html"><a href="overall-standings.html#overall-position"><i class="fa fa-check"></i><b>0.1</b> Overall Position</a></li>
+<li class="chapter" data-level="0.2" data-path="overall-standings.html"><a href="overall-standings.html#gap-to-overall-leader-at-each-stage-end"><i class="fa fa-check"></i><b>0.2</b> Gap to Overall Leader at Each Stage End</a></li>
+<li class="chapter" data-level="0.3" data-path="overall-standings.html"><a href="overall-standings.html#stage-position-history"><i class="fa fa-check"></i><b>0.3</b> Stage Position History</a></li>
+<li class="chapter" data-level="0.4" data-path="overall-standings.html"><a href="overall-standings.html#stage-times"><i class="fa fa-check"></i><b>0.4</b> Stage Times</a></li>
+</ul></li>
 <li class="chapter" data-level="1" data-path="ss1-results.html"><a href="ss1-results.html"><i class="fa fa-check"></i><b>1</b> SS1 Results</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="ss1-results.html"><a href="ss1-results.html#stage-ss1-splits-analysis"><i class="fa fa-check"></i><b>1.1</b> Stage SS1 Splits Analysis</a>
@@ -1149,7 +1174,7 @@
 <h1><span class="header-section-number">14</span> SS14 Results</h1>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-719">Table 14.1: </span>Top 10, SS14, Stojdraga - Gornja Vas 2 (20.77km)
+<span id="tab:unnamed-chunk-727">Table 14.1: </span>Top 10, SS14, Stojdraga - Gornja Vas 2 (20.77km)
 </caption>
 <thead>
 <tr>
@@ -1384,32 +1409,61 @@ OST
 <p>Length of each split section in km:</p>
 <table>
 <thead>
-<tr class="header">
-<th align="left"></th>
-<th align="right">full_split_distances</th>
-<th align="right">stage_dist</th>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+full_split_distances
+</th>
+<th style="text-align:right;">
+stage_dist
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">split_1</td>
-<td align="right">7.45</td>
-<td align="right">7.45</td>
+<tr>
+<td style="text-align:left;">
+split_1
+</td>
+<td style="text-align:right;">
+7.45
+</td>
+<td style="text-align:right;">
+7.45
+</td>
 </tr>
-<tr class="even">
-<td align="left">split_2</td>
-<td align="right">6.45</td>
-<td align="right">13.90</td>
+<tr>
+<td style="text-align:left;">
+split_2
+</td>
+<td style="text-align:right;">
+6.45
+</td>
+<td style="text-align:right;">
+13.90
+</td>
 </tr>
-<tr class="odd">
-<td align="left">split_3</td>
-<td align="right">4.67</td>
-<td align="right">18.57</td>
+<tr>
+<td style="text-align:left;">
+split_3
+</td>
+<td style="text-align:right;">
+4.67
+</td>
+<td style="text-align:right;">
+18.57
+</td>
 </tr>
-<tr class="even">
-<td align="left">split_N</td>
-<td align="right">2.20</td>
-<td align="right">20.77</td>
+<tr>
+<td style="text-align:left;">
+split_N
+</td>
+<td style="text-align:right;">
+2.20
+</td>
+<td style="text-align:right;">
+20.77
+</td>
 </tr>
 </tbody>
 </table>
@@ -1419,88 +1473,214 @@ OST
 <p>Summary of stage split times and overall stage result:</p>
 <table>
 <thead>
-<tr class="header">
-<th align="left">code</th>
-<th align="right">split_1</th>
-<th align="right">split_2</th>
-<th align="right">split_3</th>
-<th align="right">split_N</th>
-<th align="right">diffFirstS</th>
-<th align="right">position</th>
+<tr>
+<th style="text-align:left;">
+code
+</th>
+<th style="text-align:right;">
+split_1
+</th>
+<th style="text-align:right;">
+split_2
+</th>
+<th style="text-align:right;">
+split_3
+</th>
+<th style="text-align:right;">
+split_N
+</th>
+<th style="text-align:right;">
+diffFirstS
+</th>
+<th style="text-align:right;">
+position
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">KAT</td>
-<td align="right">290.4</td>
-<td align="right">516.6</td>
-<td align="right">688.4</td>
-<td align="right">756.1</td>
-<td align="right">0.0</td>
-<td align="right">1</td>
+<tr>
+<td style="text-align:left;">
+KAT
+</td>
+<td style="text-align:right;">
+290.4
+</td>
+<td style="text-align:right;">
+516.6
+</td>
+<td style="text-align:right;">
+688.4
+</td>
+<td style="text-align:right;">
+756.1
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+1
+</td>
 </tr>
-<tr class="even">
-<td align="left">EVA</td>
-<td align="right">289.1</td>
-<td align="right">516.7</td>
-<td align="right">688.9</td>
-<td align="right">757.1</td>
-<td align="right">1.0</td>
-<td align="right">2</td>
+<tr>
+<td style="text-align:left;">
+EVA
+</td>
+<td style="text-align:right;">
+289.1
+</td>
+<td style="text-align:right;">
+516.7
+</td>
+<td style="text-align:right;">
+688.9
+</td>
+<td style="text-align:right;">
+757.1
+</td>
+<td style="text-align:right;">
+1.0
+</td>
+<td style="text-align:right;">
+2
+</td>
 </tr>
-<tr class="odd">
-<td align="left">NEU</td>
-<td align="right">289.9</td>
-<td align="right">517.2</td>
-<td align="right">690.7</td>
-<td align="right">758.4</td>
-<td align="right">2.3</td>
-<td align="right">3</td>
+<tr>
+<td style="text-align:left;">
+NEU
+</td>
+<td style="text-align:right;">
+289.9
+</td>
+<td style="text-align:right;">
+517.2
+</td>
+<td style="text-align:right;">
+690.7
+</td>
+<td style="text-align:right;">
+758.4
+</td>
+<td style="text-align:right;">
+2.3
+</td>
+<td style="text-align:right;">
+3
+</td>
 </tr>
-<tr class="even">
-<td align="left">OGI</td>
-<td align="right">290.8</td>
-<td align="right">519.2</td>
-<td align="right">691.7</td>
-<td align="right">758.5</td>
-<td align="right">2.4</td>
-<td align="right">4</td>
+<tr>
+<td style="text-align:left;">
+OGI
+</td>
+<td style="text-align:right;">
+290.8
+</td>
+<td style="text-align:right;">
+519.2
+</td>
+<td style="text-align:right;">
+691.7
+</td>
+<td style="text-align:right;">
+758.5
+</td>
+<td style="text-align:right;">
+2.4
+</td>
+<td style="text-align:right;">
+4
+</td>
 </tr>
-<tr class="odd">
-<td align="left">TÄN</td>
-<td align="right">290.4</td>
-<td align="right">520.2</td>
-<td align="right">692.9</td>
-<td align="right">760.2</td>
-<td align="right">4.1</td>
-<td align="right">5</td>
+<tr>
+<td style="text-align:left;">
+TÄN
+</td>
+<td style="text-align:right;">
+290.4
+</td>
+<td style="text-align:right;">
+520.2
+</td>
+<td style="text-align:right;">
+692.9
+</td>
+<td style="text-align:right;">
+760.2
+</td>
+<td style="text-align:right;">
+4.1
+</td>
+<td style="text-align:right;">
+5
+</td>
 </tr>
-<tr class="even">
-<td align="left">FOU</td>
-<td align="right">292.4</td>
-<td align="right">522.8</td>
-<td align="right">697.1</td>
-<td align="right">764.8</td>
-<td align="right">8.7</td>
-<td align="right">6</td>
+<tr>
+<td style="text-align:left;">
+FOU
+</td>
+<td style="text-align:right;">
+292.4
+</td>
+<td style="text-align:right;">
+522.8
+</td>
+<td style="text-align:right;">
+697.1
+</td>
+<td style="text-align:right;">
+764.8
+</td>
+<td style="text-align:right;">
+8.7
+</td>
+<td style="text-align:right;">
+6
+</td>
 </tr>
-<tr class="odd">
-<td align="left">BRE</td>
-<td align="right">292.7</td>
-<td align="right">524.2</td>
-<td align="right">698.3</td>
-<td align="right">766.0</td>
-<td align="right">9.9</td>
-<td align="right">7</td>
+<tr>
+<td style="text-align:left;">
+BRE
+</td>
+<td style="text-align:right;">
+292.7
+</td>
+<td style="text-align:right;">
+524.2
+</td>
+<td style="text-align:right;">
+698.3
+</td>
+<td style="text-align:right;">
+766.0
+</td>
+<td style="text-align:right;">
+9.9
+</td>
+<td style="text-align:right;">
+7
+</td>
 </tr>
-<tr class="even">
-<td align="left">GRE</td>
-<td align="right">293.0</td>
-<td align="right">524.5</td>
-<td align="right">700.2</td>
-<td align="right">769.0</td>
-<td align="right">12.9</td>
-<td align="right">8</td>
+<tr>
+<td style="text-align:left;">
+GRE
+</td>
+<td style="text-align:right;">
+293.0
+</td>
+<td style="text-align:right;">
+524.5
+</td>
+<td style="text-align:right;">
+700.2
+</td>
+<td style="text-align:right;">
+769.0
+</td>
+<td style="text-align:right;">
+12.9
+</td>
+<td style="text-align:right;">
+8
+</td>
 </tr>
 </tbody>
 </table>
@@ -1510,7 +1690,7 @@ OST
 <p>Rank of each split time:</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-727">Table 14.2: </span>SS14 split time rank
+<span id="tab:unnamed-chunk-735">Table 14.2: </span>SS14 split time rank
 </caption>
 <thead>
 <tr>
@@ -1673,7 +1853,7 @@ FOU
 <p>Rank on each split section:</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-728">Table 14.3: </span>SS14 split section rank
+<span id="tab:unnamed-chunk-736">Table 14.3: </span>SS14 split section rank
 </caption>
 <thead>
 <tr>
@@ -1839,70 +2019,160 @@ FOU
 <p>Pace is measured in seconds per kilometer, which is to say, how long it takes to complete each kilometer:</p>
 <table>
 <thead>
-<tr class="header">
-<th align="left">code</th>
-<th align="right">split_1</th>
-<th align="right">split_2</th>
-<th align="right">split_3</th>
-<th align="right">split_N</th>
+<tr>
+<th style="text-align:left;">
+code
+</th>
+<th style="text-align:right;">
+split_1
+</th>
+<th style="text-align:right;">
+split_2
+</th>
+<th style="text-align:right;">
+split_3
+</th>
+<th style="text-align:right;">
+split_N
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">NEU</td>
-<td align="right">38.91</td>
-<td align="right">35.24</td>
-<td align="right">37.15</td>
-<td align="right">30.77</td>
+<tr>
+<td style="text-align:left;">
+NEU
+</td>
+<td style="text-align:right;">
+38.91
+</td>
+<td style="text-align:right;">
+35.24
+</td>
+<td style="text-align:right;">
+37.15
+</td>
+<td style="text-align:right;">
+30.77
+</td>
 </tr>
-<tr class="even">
-<td align="left">OGI</td>
-<td align="right">39.03</td>
-<td align="right">35.41</td>
-<td align="right">36.94</td>
-<td align="right">30.36</td>
+<tr>
+<td style="text-align:left;">
+OGI
+</td>
+<td style="text-align:right;">
+39.03
+</td>
+<td style="text-align:right;">
+35.41
+</td>
+<td style="text-align:right;">
+36.94
+</td>
+<td style="text-align:right;">
+30.36
+</td>
 </tr>
-<tr class="odd">
-<td align="left">EVA</td>
-<td align="right">38.81</td>
-<td align="right">35.29</td>
-<td align="right">36.87</td>
-<td align="right">31.00</td>
+<tr>
+<td style="text-align:left;">
+EVA
+</td>
+<td style="text-align:right;">
+38.81
+</td>
+<td style="text-align:right;">
+35.29
+</td>
+<td style="text-align:right;">
+36.87
+</td>
+<td style="text-align:right;">
+31.00
+</td>
 </tr>
-<tr class="even">
-<td align="left">TÄN</td>
-<td align="right">38.98</td>
-<td align="right">35.63</td>
-<td align="right">36.98</td>
-<td align="right">30.59</td>
+<tr>
+<td style="text-align:left;">
+TÄN
+</td>
+<td style="text-align:right;">
+38.98
+</td>
+<td style="text-align:right;">
+35.63
+</td>
+<td style="text-align:right;">
+36.98
+</td>
+<td style="text-align:right;">
+30.59
+</td>
 </tr>
-<tr class="odd">
-<td align="left">BRE</td>
-<td align="right">39.29</td>
-<td align="right">35.89</td>
-<td align="right">37.28</td>
-<td align="right">30.77</td>
+<tr>
+<td style="text-align:left;">
+BRE
+</td>
+<td style="text-align:right;">
+39.29
+</td>
+<td style="text-align:right;">
+35.89
+</td>
+<td style="text-align:right;">
+37.28
+</td>
+<td style="text-align:right;">
+30.77
+</td>
 </tr>
-<tr class="even">
-<td align="left">KAT</td>
-<td align="right">38.98</td>
-<td align="right">35.07</td>
-<td align="right">36.79</td>
-<td align="right">30.77</td>
+<tr>
+<td style="text-align:left;">
+KAT
+</td>
+<td style="text-align:right;">
+38.98
+</td>
+<td style="text-align:right;">
+35.07
+</td>
+<td style="text-align:right;">
+36.79
+</td>
+<td style="text-align:right;">
+30.77
+</td>
 </tr>
-<tr class="odd">
-<td align="left">GRE</td>
-<td align="right">39.33</td>
-<td align="right">35.89</td>
-<td align="right">37.62</td>
-<td align="right">31.27</td>
+<tr>
+<td style="text-align:left;">
+GRE
+</td>
+<td style="text-align:right;">
+39.33
+</td>
+<td style="text-align:right;">
+35.89
+</td>
+<td style="text-align:right;">
+37.62
+</td>
+<td style="text-align:right;">
+31.27
+</td>
 </tr>
-<tr class="even">
-<td align="left">FOU</td>
-<td align="right">39.25</td>
-<td align="right">35.72</td>
-<td align="right">37.32</td>
-<td align="right">30.77</td>
+<tr>
+<td style="text-align:left;">
+FOU
+</td>
+<td style="text-align:right;">
+39.25
+</td>
+<td style="text-align:right;">
+35.72
+</td>
+<td style="text-align:right;">
+37.32
+</td>
+<td style="text-align:right;">
+30.77
+</td>
 </tr>
 </tbody>
 </table>
@@ -1921,7 +2191,7 @@ FOU
 <p>Driver times compared to the first ranked recorded split time at each split:</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-731">Table 14.4: </span>SS14 ultimate split actual deltas
+<span id="tab:unnamed-chunk-739">Table 14.4: </span>SS14 ultimate split actual deltas
 </caption>
 <thead>
 <tr>
@@ -2104,7 +2374,7 @@ ultimate
 <p>Split durations rebased relative to the fastest transit of each split section:</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-732">Table 14.5: </span>SS14 ultimate section deltas
+<span id="tab:unnamed-chunk-740">Table 14.5: </span>SS14 ultimate section deltas
 </caption>
 <thead>
 <tr>
@@ -2287,7 +2557,7 @@ ultimate
 <p>Actual split times relative to the accumulated ultimate split section times:</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-733">Table 14.6: </span>SS14 accumulated ultimate section deltas
+<span id="tab:unnamed-chunk-741">Table 14.6: </span>SS14 accumulated ultimate section deltas
 </caption>
 <thead>
 <tr>
@@ -2469,7 +2739,7 @@ ultimate
 <div id="split-section-pace-27" class="section level3" number="14.1.6">
 <h3><span class="header-section-number">14.1.6</span> Split Section Pace</h3>
 <p>Distribution of pace values for each split section:</p>
-<p><img src="_main_files/figure-html/unnamed-chunk-734-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-742-1.png" width="672" /></p>
 </div>
 </div>
 <div id="driver-report-ss14---rov" class="section level2" number="14.2">
@@ -2477,7 +2747,7 @@ ultimate
 <p>Stage report for ROV.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-735">Table 14.7: </span>SS14 stage report — ROV
+<span id="tab:unnamed-chunk-743">Table 14.7: </span>SS14 stage report — ROV
 </caption>
 <thead>
 <tr>
@@ -2514,7 +2784,7 @@ entryId
 <p>ROV’s delta at each split compared to other drivers.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-736">Table 14.8: </span>SS14 split delta — ROV
+<span id="tab:unnamed-chunk-744">Table 14.8: </span>SS14 split delta — ROV
 </caption>
 <thead>
 <tr>
@@ -2546,7 +2816,7 @@ split_N
 <p>ROV’s delta in time to complete each split section compared to other drivers:</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-737">Table 14.9: </span>SS14 split section delta — ROV
+<span id="tab:unnamed-chunk-745">Table 14.9: </span>SS14 split section delta — ROV
 </caption>
 <thead>
 <tr>
@@ -2577,7 +2847,7 @@ split_N
 <h3><span class="header-section-number">14.2.3</span> Within-Split Pace Deltas</h3>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-738">Table 14.10: </span>SS14 split section pace delta — ROV
+<span id="tab:unnamed-chunk-746">Table 14.10: </span>SS14 split section pace delta — ROV
 </caption>
 <thead>
 <tr>
@@ -2610,7 +2880,7 @@ split_N
 <p>Stage report for NEU.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-739">Table 14.11: </span>SS14 stage report — NEU
+<span id="tab:unnamed-chunk-747">Table 14.11: </span>SS14 stage report — NEU
 </caption>
 <thead>
 <tr>
@@ -2802,7 +3072,7 @@ GRE
 <p>NEU’s delta at each split compared to other drivers.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-740">Table 14.12: </span>SS14 split delta — NEU
+<span id="tab:unnamed-chunk-748">Table 14.12: </span>SS14 split delta — NEU
 </caption>
 <thead>
 <tr>
@@ -2968,7 +3238,7 @@ FOU
 <p>NEU’s delta in time to complete each split section compared to other drivers:</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-741">Table 14.13: </span>SS14 split section delta — NEU
+<span id="tab:unnamed-chunk-749">Table 14.13: </span>SS14 split section delta — NEU
 </caption>
 <thead>
 <tr>
@@ -3133,7 +3403,7 @@ FOU
 <h3><span class="header-section-number">14.3.3</span> Within-Split Pace Deltas</h3>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-742">Table 14.14: </span>SS14 split section pace delta — NEU
+<span id="tab:unnamed-chunk-750">Table 14.14: </span>SS14 split section pace delta — NEU
 </caption>
 <thead>
 <tr>
@@ -3300,7 +3570,7 @@ FOU
 <p>Stage report for OGI.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-743">Table 14.15: </span>SS14 stage report — OGI
+<span id="tab:unnamed-chunk-751">Table 14.15: </span>SS14 stage report — OGI
 </caption>
 <thead>
 <tr>
@@ -3492,7 +3762,7 @@ GRE
 <p>OGI’s delta at each split compared to other drivers.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-744">Table 14.16: </span>SS14 split delta — OGI
+<span id="tab:unnamed-chunk-752">Table 14.16: </span>SS14 split delta — OGI
 </caption>
 <thead>
 <tr>
@@ -3658,7 +3928,7 @@ FOU
 <p>OGI’s delta in time to complete each split section compared to other drivers:</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-745">Table 14.17: </span>SS14 split section delta — OGI
+<span id="tab:unnamed-chunk-753">Table 14.17: </span>SS14 split section delta — OGI
 </caption>
 <thead>
 <tr>
@@ -3823,7 +4093,7 @@ FOU
 <h3><span class="header-section-number">14.4.3</span> Within-Split Pace Deltas</h3>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-746">Table 14.18: </span>SS14 split section pace delta — OGI
+<span id="tab:unnamed-chunk-754">Table 14.18: </span>SS14 split section pace delta — OGI
 </caption>
 <thead>
 <tr>
@@ -3990,7 +4260,7 @@ FOU
 <p>Stage report for EVA.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-747">Table 14.19: </span>SS14 stage report — EVA
+<span id="tab:unnamed-chunk-755">Table 14.19: </span>SS14 stage report — EVA
 </caption>
 <thead>
 <tr>
@@ -4182,7 +4452,7 @@ GRE
 <p>EVA’s delta at each split compared to other drivers.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-748">Table 14.20: </span>SS14 split delta — EVA
+<span id="tab:unnamed-chunk-756">Table 14.20: </span>SS14 split delta — EVA
 </caption>
 <thead>
 <tr>
@@ -4348,7 +4618,7 @@ FOU
 <p>EVA’s delta in time to complete each split section compared to other drivers:</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-749">Table 14.21: </span>SS14 split section delta — EVA
+<span id="tab:unnamed-chunk-757">Table 14.21: </span>SS14 split section delta — EVA
 </caption>
 <thead>
 <tr>
@@ -4513,7 +4783,7 @@ FOU
 <h3><span class="header-section-number">14.5.3</span> Within-Split Pace Deltas</h3>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-750">Table 14.22: </span>SS14 split section pace delta — EVA
+<span id="tab:unnamed-chunk-758">Table 14.22: </span>SS14 split section pace delta — EVA
 </caption>
 <thead>
 <tr>
@@ -4680,7 +4950,7 @@ FOU
 <p>Stage report for TÄN.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-751">Table 14.23: </span>SS14 stage report — TÄN
+<span id="tab:unnamed-chunk-759">Table 14.23: </span>SS14 stage report — TÄN
 </caption>
 <thead>
 <tr>
@@ -4872,7 +5142,7 @@ GRE
 <p>TÄN’s delta at each split compared to other drivers.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-752">Table 14.24: </span>SS14 split delta — TÄN
+<span id="tab:unnamed-chunk-760">Table 14.24: </span>SS14 split delta — TÄN
 </caption>
 <thead>
 <tr>
@@ -5038,7 +5308,7 @@ FOU
 <p>TÄN’s delta in time to complete each split section compared to other drivers:</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-753">Table 14.25: </span>SS14 split section delta — TÄN
+<span id="tab:unnamed-chunk-761">Table 14.25: </span>SS14 split section delta — TÄN
 </caption>
 <thead>
 <tr>
@@ -5203,7 +5473,7 @@ FOU
 <h3><span class="header-section-number">14.6.3</span> Within-Split Pace Deltas</h3>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-754">Table 14.26: </span>SS14 split section pace delta — TÄN
+<span id="tab:unnamed-chunk-762">Table 14.26: </span>SS14 split section pace delta — TÄN
 </caption>
 <thead>
 <tr>
@@ -5370,7 +5640,7 @@ FOU
 <p>Stage report for BRE.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-755">Table 14.27: </span>SS14 stage report — BRE
+<span id="tab:unnamed-chunk-763">Table 14.27: </span>SS14 stage report — BRE
 </caption>
 <thead>
 <tr>
@@ -5562,7 +5832,7 @@ GRE
 <p>BRE’s delta at each split compared to other drivers.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-756">Table 14.28: </span>SS14 split delta — BRE
+<span id="tab:unnamed-chunk-764">Table 14.28: </span>SS14 split delta — BRE
 </caption>
 <thead>
 <tr>
@@ -5728,7 +5998,7 @@ FOU
 <p>BRE’s delta in time to complete each split section compared to other drivers:</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-757">Table 14.29: </span>SS14 split section delta — BRE
+<span id="tab:unnamed-chunk-765">Table 14.29: </span>SS14 split section delta — BRE
 </caption>
 <thead>
 <tr>
@@ -5893,7 +6163,7 @@ FOU
 <h3><span class="header-section-number">14.7.3</span> Within-Split Pace Deltas</h3>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-758">Table 14.30: </span>SS14 split section pace delta — BRE
+<span id="tab:unnamed-chunk-766">Table 14.30: </span>SS14 split section pace delta — BRE
 </caption>
 <thead>
 <tr>
@@ -6060,7 +6330,7 @@ FOU
 <p>Stage report for KAT.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-759">Table 14.31: </span>SS14 stage report — KAT
+<span id="tab:unnamed-chunk-767">Table 14.31: </span>SS14 stage report — KAT
 </caption>
 <thead>
 <tr>
@@ -6252,7 +6522,7 @@ GRE
 <p>KAT’s delta at each split compared to other drivers.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-760">Table 14.32: </span>SS14 split delta — KAT
+<span id="tab:unnamed-chunk-768">Table 14.32: </span>SS14 split delta — KAT
 </caption>
 <thead>
 <tr>
@@ -6418,7 +6688,7 @@ FOU
 <p>KAT’s delta in time to complete each split section compared to other drivers:</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-761">Table 14.33: </span>SS14 split section delta — KAT
+<span id="tab:unnamed-chunk-769">Table 14.33: </span>SS14 split section delta — KAT
 </caption>
 <thead>
 <tr>
@@ -6583,7 +6853,7 @@ FOU
 <h3><span class="header-section-number">14.8.3</span> Within-Split Pace Deltas</h3>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-762">Table 14.34: </span>SS14 split section pace delta — KAT
+<span id="tab:unnamed-chunk-770">Table 14.34: </span>SS14 split section pace delta — KAT
 </caption>
 <thead>
 <tr>
@@ -6750,7 +7020,7 @@ FOU
 <p>Stage report for GRE.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-763">Table 14.35: </span>SS14 stage report — GRE
+<span id="tab:unnamed-chunk-771">Table 14.35: </span>SS14 stage report — GRE
 </caption>
 <thead>
 <tr>
@@ -6942,7 +7212,7 @@ GRE
 <p>GRE’s delta at each split compared to other drivers.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-764">Table 14.36: </span>SS14 split delta — GRE
+<span id="tab:unnamed-chunk-772">Table 14.36: </span>SS14 split delta — GRE
 </caption>
 <thead>
 <tr>
@@ -7108,7 +7378,7 @@ FOU
 <p>GRE’s delta in time to complete each split section compared to other drivers:</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-765">Table 14.37: </span>SS14 split section delta — GRE
+<span id="tab:unnamed-chunk-773">Table 14.37: </span>SS14 split section delta — GRE
 </caption>
 <thead>
 <tr>
@@ -7273,7 +7543,7 @@ FOU
 <h3><span class="header-section-number">14.9.3</span> Within-Split Pace Deltas</h3>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-766">Table 14.38: </span>SS14 split section pace delta — GRE
+<span id="tab:unnamed-chunk-774">Table 14.38: </span>SS14 split section pace delta — GRE
 </caption>
 <thead>
 <tr>
@@ -7440,7 +7710,7 @@ FOU
 <p>Stage report for FOU.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-767">Table 14.39: </span>SS14 stage report — FOU
+<span id="tab:unnamed-chunk-775">Table 14.39: </span>SS14 stage report — FOU
 </caption>
 <thead>
 <tr>
@@ -7632,7 +7902,7 @@ GRE
 <p>FOU’s delta at each split compared to other drivers.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-768">Table 14.40: </span>SS14 split delta — FOU
+<span id="tab:unnamed-chunk-776">Table 14.40: </span>SS14 split delta — FOU
 </caption>
 <thead>
 <tr>
@@ -7798,7 +8068,7 @@ FOU
 <p>FOU’s delta in time to complete each split section compared to other drivers:</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-769">Table 14.41: </span>SS14 split section delta — FOU
+<span id="tab:unnamed-chunk-777">Table 14.41: </span>SS14 split section delta — FOU
 </caption>
 <thead>
 <tr>
@@ -7963,7 +8233,7 @@ FOU
 <h3><span class="header-section-number">14.10.3</span> Within-Split Pace Deltas</h3>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-770">Table 14.42: </span>SS14 split section pace delta — FOU
+<span id="tab:unnamed-chunk-778">Table 14.42: </span>SS14 split section pace delta — FOU
 </caption>
 <thead>
 <tr>

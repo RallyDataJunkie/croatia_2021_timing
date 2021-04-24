@@ -50,8 +50,6 @@ formattable( align='c',
 ### Within-Split Pace Deltas
 
 ```{r}
-
-
 driver_rebased = rebase(section_pace_wide, driverCode,
                        split_names, id_col='code') %>%
                   select(code, all_of(split_names)) %>%

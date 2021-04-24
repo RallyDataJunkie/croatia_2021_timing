@@ -1,0 +1,130 @@
+```{r warning=FALSE, include=FALSE, echo=FALSE, message=FALSE}
+library(sparkline)
+library(kableExtra)
+source('overall_sketches.R')
+source('spark_sketches.R')
+```
+
+```{r warning=FALSE, include=FALSE, echo=FALSE, message=FALSE}
+
+stage_codes =  unlist(stage_list)
+stage_list_codes = stages[stages$code %in% unlist(stage_list), 'stageId']
+
+
+multi_overall_results = get_multi_overall(stage_list_codes) %>%
+                            mutate(diffFirstS = diffFirstMs/1000,
+                                   totalTimeS = totalTimeMs/1000)
+
+multi_overall_wide_pos = multi_overall_results %>%
+                            get_multi_stage_generic_wide(stage_list_codes,
+                                                         'position')
+
+
+multi_overall_wide_time = multi_overall_results %>%
+                              get_multi_stage_generic_wide(stage_list_codes,
+                                                           'totalTimeS')
+
+multi_overall_wide_gap = multi_overall_results %>%
+                            get_multi_stage_generic_wide(stage_list_codes,
+                                                         'diffFirstS')
+```
+
+```{r warning=FALSE, include=FALSE, echo=FALSE, message=FALSE}
+# TO DO - need to have a function that does WRC/class not overall top10
+clean_top10 = function(df) {
+  df %>% relabel_times_df(stage_list_codes, cars) %>%
+          dplyr::arrange(!!as.symbol(stage_codes[length(stage_codes)])) %>%
+          head(10)
+}          
+
+multi_stage_times = get_multi_stage_times(stage_list_codes)
+
+multi_stage_times_wide = multi_stage_times %>%
+                            get_multi_stage_times_wide(stage_list_codes) %>%
+                            clean_top10()
+
+multi_stage_wide_pos = multi_stage_times %>%
+                              get_multi_stage_generic_wide(stage_list_codes,
+                                                         'position')  %>%
+                            clean_top10()
+```
+
+## Overall Position
+
+Evolution of overall position:
+
+```{r }
+out_table = multi_overall_wide_pos %>%
+                              map_stage_codes(stage_list_codes) %>%
+                              map_driver_names(cars) %>% 
+              dplyr::arrange(!!as.symbol(stage_codes[length(stage_codes)]))  %>% head(10)
+
+#formattable(out_table,
+#            align='c',
+#                  list(area(col = stage_codes) ~ highlight_first()))
+#kable(out_table)
+kable(out_table, format = "html") %>%
+  kable_styling() %>%
+  kableExtra::scroll_box(width = "100%")
+```
+
+## Gap to Overall Leader at Each Stage End
+
+The gap to stage leader, with table ordered by overall rally position at end of last recorded stage:
+
+```{r}
+multi_overall_wide_gap_top10 = multi_overall_wide_gap %>%
+                              map_stage_codes(stage_list_codes) %>%
+                              map_driver_names(cars) %>%
+                      dplyr::arrange(!!as.symbol(stage_codes[length(stage_codes)])) %>%
+                      head(10)
+
+#kable(multi_overall_wide_gap_top10)
+kable(multi_overall_wide_gap_top10, format = "html") %>%
+  kable_styling() %>%
+  kableExtra::scroll_box(width = "100%")
+```
+
+## Stage Position History
+
+*Ranked according to position on last recorded stage __not__ overall position. The advantage of this ordering is that it helps register "surprise" arising from a perhaps unexpected stage winner. The chart gives the summary of stage rank evolution.*
+
+```{r}
+gt_stage_pos_plots = list()
+multi_stage_long_pos = multi_stage_wide_pos %>%
+                              pivot_longer(c(all_of(stage_codes)),
+                                           names_to ="Stage",
+                                           values_to ="Pos") %>%
+                          mutate(Stage = factor(Stage,
+                                                levels = stage_codes))
+
+pos_range = 1:max(multi_stage_long_pos$Pos)
+
+top10_codes = multi_stage_wide_pos$code
+# Iterate through each driver in the top 10
+for (c in 1:length(top10_codes)){
+    # Add each plot to the plot list
+    gt_stage_pos_plots[[length(gt_stage_pos_plots) + 1]] <-
+        get_pos_chart(multi_stage_long_pos, top10_codes[c],
+                      embed=T, aspect_ratio=3, size=5)
+}
+
+multi_stage_wide_pos$poschart = gt_stage_pos_plots
+
+# TO DO - add Overall with coloured background?
+formattable(multi_stage_wide_pos, align='c',
+                  list(area(col = stage_codes) ~ highlight_first()))  %>%
+as.htmlwidget()
+
+```
+
+## Stage Times
+
+*Table order may be irregular...*
+
+```{r}
+#kable(multi_stage_times_wide)
+kable(multi_stage_times_wide, format = "html") %>%
+  kable_styling() %>%
+  kableExtra::scroll_box(width = "100%")
+```

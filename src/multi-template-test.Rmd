@@ -9,6 +9,7 @@ source('_code/wrc-charts.R')
 source('timing_sketches.R')
 ```
 
+
 ```{r init_vars, warning=FALSE, include=FALSE, echo=FALSE, message=FALSE, output=FALSE}
 # Load in event data
 s = get_active_season()
@@ -34,11 +35,25 @@ wrc = cars %>% filter(entryId<+22439)
 wrc_entries = wrc$entryId
 ```
 
-```{r looper, message=FALSE, echo=FALSE, error=FALSE, warning=FALSE, results='asis'}
 
+# Overall Standings {-}
+
+*Summary reports of overall standings and stage results.*
+
+```{r  message=FALSE, echo=FALSE, error=FALSE, warning=FALSE, results='asis'}
 stage_list=list("SS1", "SS2", "SS3", "SS4", "SS5", "SS6", "SS7", "SS8", "SS9", "SS10", "SS11", "SS12", "SS13", "SS14", "SS15", "SS16")
 
 omit_stage_splits = c()
+
+
+src = knit_expand("overall-template.Rmd")
+    cat(knit_child(text=src,
+                 options = list(echo=FALSE, warning=FALSE, error=FALSE),
+                 quiet=TRUE))
+```
+
+
+```{r looper, message=FALSE, echo=FALSE, error=FALSE, warning=FALSE, results='asis'}
 
 #stage_list=list("SS1","SS2")
 for (stage_code in stage_list){
