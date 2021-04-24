@@ -7,6 +7,9 @@ source('spark_sketches.R')
 
 ```{r warning=FALSE, include=FALSE, echo=FALSE, message=FALSE}
 
+# TO DO - we need to make sure we are working with the same cars
+# For example, WRC cars (cars in group), top 10 overall etc
+# The top 10 by stage may not be the same as top 10 overall
 stage_codes =  unlist(stage_list)
 stage_list_codes = stages[stages$code %in% unlist(stage_list), 'stageId']
 
@@ -100,23 +103,93 @@ multi_stage_long_pos = multi_stage_wide_pos %>%
 
 pos_range = 1:max(multi_stage_long_pos$Pos)
 
-top10_codes = multi_stage_wide_pos$code
+# TO DO - add Overall with coloured background?
+#formattable(multi_stage_wide_pos, align='c',
+#                  list(area(col = stage_codes) ~ highlight_first())) 
+
+kable(multi_stage_wide_pos, format = "html") %>%
+  kable_styling() %>%
+  kableExtra::scroll_box(width = "100%")
+```
+```{r}
+
+overall_long_gap_top10 <- multi_overall_wide_gap_top10 %>%
+                            gather(key ="Stage",
+                            value ="Gap", stage_codes) %>%
+                                group_by(code) %>%
+                                summarize(spk_ = spk_chr(-Gap,
+                                                         type ="bar")) %>%
+                              rename(overall_gap_bar=spk_)
+#spark_df(overall_long_gap_top10)
+```
+
+```{r}
+# Gap to stage winner
+multi_stage_wide_gap = multi_stage_times %>%
+                            mutate(diffFirstS = diffFirstMs/1000) %>%
+                            get_multi_stage_generic_wide(stage_list_codes,
+                                                         'diffFirstS')  %>%
+                            relabel_times_df(stage_list_codes, cars) %>%
+          dplyr::arrange(!!as.symbol(stage_codes[length(stage_codes)])) %>%
+  filter(code %in% overall_long_gap_top10$code) 
+
+multi_stage_long_gap = generate_spark_bar(multi_stage_wide_gap) %>%
+  rename(gap_to_stagewinner_bar=spk_)
+
+#spark_df(multi_stage_long_gap)
+```
+
+
+```{r}
+# Stage position chart
+#top10_codes = multi_stage_wide_pos$code
+multi_overall_wide_pos_ = multi_overall_wide_pos  %>%
+                            relabel_times_df(stage_list_codes, cars) %>%
+          dplyr::arrange(!!as.symbol(stage_codes[length(stage_codes)])) %>% head(10)
+
+multi_overall_long_pos = multi_overall_wide_pos_ %>%
+                              pivot_longer(c(all_of(stage_codes)),
+                                           names_to ="Stage",
+                                           values_to ="Pos") %>%
+                          mutate(Stage = factor(Stage,
+                                                levels = stage_codes))
+
+top10_codes = multi_overall_wide_pos_$code
+gt_stage_pos_plots = list()
+gt_overall_pos_plots = list()
 # Iterate through each driver in the top 10
 for (c in 1:length(top10_codes)){
     # Add each plot to the plot list
     gt_stage_pos_plots[[length(gt_stage_pos_plots) + 1]] <-
         get_pos_chart(multi_stage_long_pos, top10_codes[c],
                       embed=T, aspect_ratio=3, size=5)
+    gt_overall_pos_plots[[length(gt_overall_pos_plots) + 1]] <-
+        get_pos_chart(multi_overall_long_pos, top10_codes[c],
+                      embed=T, aspect_ratio=3, size=5)
 }
 
-multi_stage_wide_pos$poschart = gt_stage_pos_plots
-
-# TO DO - add Overall with coloured background?
-formattable(multi_stage_wide_pos, align='c',
-                  list(area(col = stage_codes) ~ highlight_first()))  %>%
-as.htmlwidget()
-
+multi_stage_wide_pos$stage_poschart = gt_stage_pos_plots
 ```
+
+```{r}
+multi_overall_wide_pos_$overall_poschart = gt_overall_pos_plots
+```
+
+
+### Rally Sparkline Summary
+
+Simple summary charts of rally progress for each driver, ordered by latest overall ranking:
+
+```{r}
+multi_overall_wide_gap_top10['code'] %>%
+    inner_join(multi_overall_wide_pos_[,c('code','overall_poschart')], by = 'code') %>%
+    inner_join(overall_long_gap_top10, by = 'code') %>%  
+   inner_join(multi_stage_wide_pos[,c('code','stage_poschart')], by = 'code') %>%
+  inner_join(multi_stage_long_gap[, c('code','gap_to_stagewinner_bar')], by = 'code') %>%
+
+  spark_df()
+```
+
 
 ## Stage Times
 

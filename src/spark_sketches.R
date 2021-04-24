@@ -17,3 +17,14 @@ highlight_first =  function (...)
                                              `background-color` = 'lightgrey'),
                                        style()))
 }
+
+spark_df = function(df){
+  # We need to create an htmlwidget form of the table
+  out = as.htmlwidget(formattable(df))
+  
+  # The table also has a requirement on the sparkline package
+  out$dependencies = c(out$dependencies,
+                       htmlwidgets:::widget_dependencies("sparkline",
+                                                         "sparkline"))
+  out
+}

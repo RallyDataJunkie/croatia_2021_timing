@@ -68,6 +68,9 @@
        pre:not([class]) { background-color: white }</style>
 <script src="libs/htmlwidgets-1.5.3.9000/htmlwidgets.js"></script>
 <script src="libs/formattable_widget-binding-0.2.1/formattable_widget.js"></script>
+<link href="libs/jquery-sparkline-2.1.2/jquery.sparkline.css" rel="stylesheet" />
+<script src="libs/jquery-sparkline-2.1.2/jquery.sparkline.js"></script>
+<script src="libs/sparkline-binding-2.0/sparkline.js"></script>
 
 
 
@@ -91,7 +94,10 @@
 <ul>
 <li class="chapter" data-level="0.1" data-path="overall-standings.html"><a href="overall-standings.html#overall-position"><i class="fa fa-check"></i><b>0.1</b> Overall Position</a></li>
 <li class="chapter" data-level="0.2" data-path="overall-standings.html"><a href="overall-standings.html#gap-to-overall-leader-at-each-stage-end"><i class="fa fa-check"></i><b>0.2</b> Gap to Overall Leader at Each Stage End</a></li>
-<li class="chapter" data-level="0.3" data-path="overall-standings.html"><a href="overall-standings.html#stage-position-history"><i class="fa fa-check"></i><b>0.3</b> Stage Position History</a></li>
+<li class="chapter" data-level="0.3" data-path="overall-standings.html"><a href="overall-standings.html#stage-position-history"><i class="fa fa-check"></i><b>0.3</b> Stage Position History</a>
+<ul>
+<li class="chapter" data-level="0.3.1" data-path="overall-standings.html"><a href="overall-standings.html#rally-sparkline-summary"><i class="fa fa-check"></i><b>0.3.1</b> Rally Sparkline Summary</a></li>
+</ul></li>
 <li class="chapter" data-level="0.4" data-path="overall-standings.html"><a href="overall-standings.html#stage-times"><i class="fa fa-check"></i><b>0.4</b> Stage Times</a></li>
 </ul></li>
 <li class="chapter" data-level="1" data-path="ss1-results.html"><a href="ss1-results.html"><i class="fa fa-check"></i><b>1</b> SS1 Results</a>
@@ -1174,7 +1180,7 @@
 <h1><span class="header-section-number">9</span> SS9 Results</h1>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-452">Table 9.1: </span>Top 10, SS9, Mali Lipovec - Grdanjci 1 (20.3km)
+<span id="tab:unnamed-chunk-457">Table 9.1: </span>Top 10, SS9, Mali Lipovec - Grdanjci 1 (20.3km)
 </caption>
 <thead>
 <tr>
@@ -1667,7 +1673,7 @@ GRE
 <p>Rank of each split time:</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-460">Table 9.2: </span>SS9 split time rank
+<span id="tab:unnamed-chunk-465">Table 9.2: </span>SS9 split time rank
 </caption>
 <thead>
 <tr>
@@ -1813,7 +1819,7 @@ FOU
 <p>Rank on each split section:</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-461">Table 9.3: </span>SS9 split section rank
+<span id="tab:unnamed-chunk-466">Table 9.3: </span>SS9 split section rank
 </caption>
 <thead>
 <tr>
@@ -2117,7 +2123,7 @@ FOU
 <p>Driver times compared to the first ranked recorded split time at each split:</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-464">Table 9.4: </span>SS9 ultimate split actual deltas
+<span id="tab:unnamed-chunk-469">Table 9.4: </span>SS9 ultimate split actual deltas
 </caption>
 <thead>
 <tr>
@@ -2283,7 +2289,7 @@ ultimate
 <p>Split durations rebased relative to the fastest transit of each split section:</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-465">Table 9.5: </span>SS9 ultimate section deltas
+<span id="tab:unnamed-chunk-470">Table 9.5: </span>SS9 ultimate section deltas
 </caption>
 <thead>
 <tr>
@@ -2449,7 +2455,7 @@ ultimate
 <p>Actual split times relative to the accumulated ultimate split section times:</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-466">Table 9.6: </span>SS9 accumulated ultimate section deltas
+<span id="tab:unnamed-chunk-471">Table 9.6: </span>SS9 accumulated ultimate section deltas
 </caption>
 <thead>
 <tr>
@@ -2614,7 +2620,7 @@ ultimate
 <div id="split-section-pace-17" class="section level3" number="9.1.6">
 <h3><span class="header-section-number">9.1.6</span> Split Section Pace</h3>
 <p>Distribution of pace values for each split section:</p>
-<p><img src="_main_files/figure-html/unnamed-chunk-467-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-472-1.png" width="672" /></p>
 </div>
 </div>
 <div id="driver-report-ss9---rov" class="section level2" number="9.2">
@@ -2622,7 +2628,7 @@ ultimate
 <p>Stage report for ROV.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-468">Table 9.7: </span>SS9 stage report — ROV
+<span id="tab:unnamed-chunk-473">Table 9.7: </span>SS9 stage report — ROV
 </caption>
 <thead>
 <tr>
@@ -2659,7 +2665,7 @@ entryId
 <p>ROV’s delta at each split compared to other drivers.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-469">Table 9.8: </span>SS9 split delta — ROV
+<span id="tab:unnamed-chunk-474">Table 9.8: </span>SS9 split delta — ROV
 </caption>
 <thead>
 <tr>
@@ -2691,7 +2697,7 @@ split_N
 <p>ROV’s delta in time to complete each split section compared to other drivers:</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-470">Table 9.9: </span>SS9 split section delta — ROV
+<span id="tab:unnamed-chunk-475">Table 9.9: </span>SS9 split section delta — ROV
 </caption>
 <thead>
 <tr>
@@ -2722,7 +2728,7 @@ split_N
 <h3><span class="header-section-number">9.2.3</span> Within-Split Pace Deltas</h3>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-471">Table 9.10: </span>SS9 split section pace delta — ROV
+<span id="tab:unnamed-chunk-476">Table 9.10: </span>SS9 split section pace delta — ROV
 </caption>
 <thead>
 <tr>
@@ -2755,7 +2761,7 @@ split_N
 <p>Stage report for NEU.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-472">Table 9.11: </span>SS9 stage report — NEU
+<span id="tab:unnamed-chunk-477">Table 9.11: </span>SS9 stage report — NEU
 </caption>
 <thead>
 <tr>
@@ -2947,7 +2953,7 @@ BRE
 <p>NEU’s delta at each split compared to other drivers.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-473">Table 9.12: </span>SS9 split delta — NEU
+<span id="tab:unnamed-chunk-478">Table 9.12: </span>SS9 split delta — NEU
 </caption>
 <thead>
 <tr>
@@ -3096,7 +3102,7 @@ FOU
 <p>NEU’s delta in time to complete each split section compared to other drivers:</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-474">Table 9.13: </span>SS9 split section delta — NEU
+<span id="tab:unnamed-chunk-479">Table 9.13: </span>SS9 split section delta — NEU
 </caption>
 <thead>
 <tr>
@@ -3244,7 +3250,7 @@ FOU
 <h3><span class="header-section-number">9.3.3</span> Within-Split Pace Deltas</h3>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-475">Table 9.14: </span>SS9 split section pace delta — NEU
+<span id="tab:unnamed-chunk-480">Table 9.14: </span>SS9 split section pace delta — NEU
 </caption>
 <thead>
 <tr>
@@ -3394,7 +3400,7 @@ FOU
 <p>Stage report for OGI.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-476">Table 9.15: </span>SS9 stage report — OGI
+<span id="tab:unnamed-chunk-481">Table 9.15: </span>SS9 stage report — OGI
 </caption>
 <thead>
 <tr>
@@ -3586,7 +3592,7 @@ BRE
 <p>OGI’s delta at each split compared to other drivers.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-477">Table 9.16: </span>SS9 split delta — OGI
+<span id="tab:unnamed-chunk-482">Table 9.16: </span>SS9 split delta — OGI
 </caption>
 <thead>
 <tr>
@@ -3735,7 +3741,7 @@ FOU
 <p>OGI’s delta in time to complete each split section compared to other drivers:</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-478">Table 9.17: </span>SS9 split section delta — OGI
+<span id="tab:unnamed-chunk-483">Table 9.17: </span>SS9 split section delta — OGI
 </caption>
 <thead>
 <tr>
@@ -3883,7 +3889,7 @@ FOU
 <h3><span class="header-section-number">9.4.3</span> Within-Split Pace Deltas</h3>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-479">Table 9.18: </span>SS9 split section pace delta — OGI
+<span id="tab:unnamed-chunk-484">Table 9.18: </span>SS9 split section pace delta — OGI
 </caption>
 <thead>
 <tr>
@@ -4033,7 +4039,7 @@ FOU
 <p>Stage report for EVA.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-480">Table 9.19: </span>SS9 stage report — EVA
+<span id="tab:unnamed-chunk-485">Table 9.19: </span>SS9 stage report — EVA
 </caption>
 <thead>
 <tr>
@@ -4225,7 +4231,7 @@ BRE
 <p>EVA’s delta at each split compared to other drivers.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-481">Table 9.20: </span>SS9 split delta — EVA
+<span id="tab:unnamed-chunk-486">Table 9.20: </span>SS9 split delta — EVA
 </caption>
 <thead>
 <tr>
@@ -4374,7 +4380,7 @@ FOU
 <p>EVA’s delta in time to complete each split section compared to other drivers:</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-482">Table 9.21: </span>SS9 split section delta — EVA
+<span id="tab:unnamed-chunk-487">Table 9.21: </span>SS9 split section delta — EVA
 </caption>
 <thead>
 <tr>
@@ -4522,7 +4528,7 @@ FOU
 <h3><span class="header-section-number">9.5.3</span> Within-Split Pace Deltas</h3>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-483">Table 9.22: </span>SS9 split section pace delta — EVA
+<span id="tab:unnamed-chunk-488">Table 9.22: </span>SS9 split section pace delta — EVA
 </caption>
 <thead>
 <tr>
@@ -4672,7 +4678,7 @@ FOU
 <p>Stage report for TÄN.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-484">Table 9.23: </span>SS9 stage report — TÄN
+<span id="tab:unnamed-chunk-489">Table 9.23: </span>SS9 stage report — TÄN
 </caption>
 <thead>
 <tr>
@@ -4864,7 +4870,7 @@ BRE
 <p>TÄN’s delta at each split compared to other drivers.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-485">Table 9.24: </span>SS9 split delta — TÄN
+<span id="tab:unnamed-chunk-490">Table 9.24: </span>SS9 split delta — TÄN
 </caption>
 <thead>
 <tr>
@@ -5013,7 +5019,7 @@ FOU
 <p>TÄN’s delta in time to complete each split section compared to other drivers:</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-486">Table 9.25: </span>SS9 split section delta — TÄN
+<span id="tab:unnamed-chunk-491">Table 9.25: </span>SS9 split section delta — TÄN
 </caption>
 <thead>
 <tr>
@@ -5161,7 +5167,7 @@ FOU
 <h3><span class="header-section-number">9.6.3</span> Within-Split Pace Deltas</h3>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-487">Table 9.26: </span>SS9 split section pace delta — TÄN
+<span id="tab:unnamed-chunk-492">Table 9.26: </span>SS9 split section pace delta — TÄN
 </caption>
 <thead>
 <tr>
@@ -5311,7 +5317,7 @@ FOU
 <p>Stage report for BRE.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-488">Table 9.27: </span>SS9 stage report — BRE
+<span id="tab:unnamed-chunk-493">Table 9.27: </span>SS9 stage report — BRE
 </caption>
 <thead>
 <tr>
@@ -5503,7 +5509,7 @@ BRE
 <p>BRE’s delta at each split compared to other drivers.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-489">Table 9.28: </span>SS9 split delta — BRE
+<span id="tab:unnamed-chunk-494">Table 9.28: </span>SS9 split delta — BRE
 </caption>
 <thead>
 <tr>
@@ -5535,7 +5541,7 @@ split_N
 <p>BRE’s delta in time to complete each split section compared to other drivers:</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-490">Table 9.29: </span>SS9 split section delta — BRE
+<span id="tab:unnamed-chunk-495">Table 9.29: </span>SS9 split section delta — BRE
 </caption>
 <thead>
 <tr>
@@ -5566,7 +5572,7 @@ split_N
 <h3><span class="header-section-number">9.7.3</span> Within-Split Pace Deltas</h3>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-491">Table 9.30: </span>SS9 split section pace delta — BRE
+<span id="tab:unnamed-chunk-496">Table 9.30: </span>SS9 split section pace delta — BRE
 </caption>
 <thead>
 <tr>
@@ -5599,7 +5605,7 @@ split_N
 <p>Stage report for KAT.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-492">Table 9.31: </span>SS9 stage report — KAT
+<span id="tab:unnamed-chunk-497">Table 9.31: </span>SS9 stage report — KAT
 </caption>
 <thead>
 <tr>
@@ -5791,7 +5797,7 @@ BRE
 <p>KAT’s delta at each split compared to other drivers.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-493">Table 9.32: </span>SS9 split delta — KAT
+<span id="tab:unnamed-chunk-498">Table 9.32: </span>SS9 split delta — KAT
 </caption>
 <thead>
 <tr>
@@ -5940,7 +5946,7 @@ FOU
 <p>KAT’s delta in time to complete each split section compared to other drivers:</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-494">Table 9.33: </span>SS9 split section delta — KAT
+<span id="tab:unnamed-chunk-499">Table 9.33: </span>SS9 split section delta — KAT
 </caption>
 <thead>
 <tr>
@@ -6088,7 +6094,7 @@ FOU
 <h3><span class="header-section-number">9.8.3</span> Within-Split Pace Deltas</h3>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-495">Table 9.34: </span>SS9 split section pace delta — KAT
+<span id="tab:unnamed-chunk-500">Table 9.34: </span>SS9 split section pace delta — KAT
 </caption>
 <thead>
 <tr>
@@ -6238,7 +6244,7 @@ FOU
 <p>Stage report for GRE.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-496">Table 9.35: </span>SS9 stage report — GRE
+<span id="tab:unnamed-chunk-501">Table 9.35: </span>SS9 stage report — GRE
 </caption>
 <thead>
 <tr>
@@ -6430,7 +6436,7 @@ BRE
 <p>GRE’s delta at each split compared to other drivers.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-497">Table 9.36: </span>SS9 split delta — GRE
+<span id="tab:unnamed-chunk-502">Table 9.36: </span>SS9 split delta — GRE
 </caption>
 <thead>
 <tr>
@@ -6579,7 +6585,7 @@ FOU
 <p>GRE’s delta in time to complete each split section compared to other drivers:</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-498">Table 9.37: </span>SS9 split section delta — GRE
+<span id="tab:unnamed-chunk-503">Table 9.37: </span>SS9 split section delta — GRE
 </caption>
 <thead>
 <tr>
@@ -6727,7 +6733,7 @@ FOU
 <h3><span class="header-section-number">9.9.3</span> Within-Split Pace Deltas</h3>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-499">Table 9.38: </span>SS9 split section pace delta — GRE
+<span id="tab:unnamed-chunk-504">Table 9.38: </span>SS9 split section pace delta — GRE
 </caption>
 <thead>
 <tr>
@@ -6877,7 +6883,7 @@ FOU
 <p>Stage report for FOU.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-500">Table 9.39: </span>SS9 stage report — FOU
+<span id="tab:unnamed-chunk-505">Table 9.39: </span>SS9 stage report — FOU
 </caption>
 <thead>
 <tr>
@@ -7069,7 +7075,7 @@ BRE
 <p>FOU’s delta at each split compared to other drivers.</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-501">Table 9.40: </span>SS9 split delta — FOU
+<span id="tab:unnamed-chunk-506">Table 9.40: </span>SS9 split delta — FOU
 </caption>
 <thead>
 <tr>
@@ -7218,7 +7224,7 @@ FOU
 <p>FOU’s delta in time to complete each split section compared to other drivers:</p>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-502">Table 9.41: </span>SS9 split section delta — FOU
+<span id="tab:unnamed-chunk-507">Table 9.41: </span>SS9 split section delta — FOU
 </caption>
 <thead>
 <tr>
@@ -7366,7 +7372,7 @@ FOU
 <h3><span class="header-section-number">9.10.3</span> Within-Split Pace Deltas</h3>
 <table class="table table-condensed">
 <caption>
-<span id="tab:unnamed-chunk-503">Table 9.42: </span>SS9 split section pace delta — FOU
+<span id="tab:unnamed-chunk-508">Table 9.42: </span>SS9 split section pace delta — FOU
 </caption>
 <thead>
 <tr>
