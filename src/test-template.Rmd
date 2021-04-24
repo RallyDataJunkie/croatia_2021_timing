@@ -16,6 +16,19 @@ splits_locations$splitname = sapply(splits_locations$splitPointId,
 split_names = splits_locations$splitname
 split_cols = get_split_cols(splits)
 split_names = c(split_names, 'split_N')
+
+# Split distances
+splits_locations$start_dist = lag(splits_locations$distance,
+                                  default=0)
+
+splits_locations$section_dist = c(splits_locations$distance[1],
+                                  diff(splits_locations$distance))
+split_distances = splits_locations$section_dist
+
+stage_dist = stages[stages['stageId']==stageId,'distance']
+full_split_distances = c(split_distances, stage_dist-sum(split_distances))
+# Label distances using split names
+names(full_split_distances) = split_names
 ```
 
 
@@ -34,9 +47,29 @@ full_splits_wide = get_splits_wide(splits, wrc_entries) %>%
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 full_durations_wide = get_split_duration(full_splits_wide,
                                           split_names, id_col='code')
+
+# Pace
+section_pace_wide = full_durations_wide
+
+for (s in split_names) {
+  section_pace_wide[,s] = section_pace_wide[,s] / full_split_distances[s]
+}
+
 ```
 
-### Stage Split Times and Overall Stage Result
+### Split Locations
+
+Length of each split section in km:
+
+```{r}
+dist_df = data.frame(full_split_distances) %>% 
+              mutate(stage_dist = cumsum(full_split_distances))
+
+kable(dist_df)
+```
+
+
+### Stage Split Times & Result
 
 Summary of stage split times and overall stage result:
 
@@ -81,7 +114,15 @@ formattable(split_ranks, align='c',
                  entryId=FALSE), caption=caption)
 ```
 
-```{t}
+### Split Section Pace
+
+Pace is measured in seconds per kilometer, which is to say, how long it takes to complete each kilometer:
+
+```{r}
+
+kable(section_pace_wide %>% mutate_if(is.numeric, round, digits = 2) )
+```
+
 ### Ultimate Stage Comparisons
 
 Split time comparisons relative to various ultimage stage time calculations.
@@ -190,6 +231,21 @@ formattable( align='c',
                  entryId=FALSE), caption=caption)
 ```
 
+### Split Section Pace
 
+Distribution of pace values for each split section:
 
+```{r}
+#Pace calculation
+section_pace_long = section_pace_wide %>% 
+                  head(10) %>%
+                gather(splitname, pace, split_names) %>%
+                merge(splits_locations[,c('splitname',
+                                          'start_dist', 'distance')],
+                          by='splitname')
+
+ggplot(section_pace_long[section_pace_long$pace<40,],
+       aes(x=distance, y=pace)) +
+    geom_boxplot(aes(group=distance))
+```
 
