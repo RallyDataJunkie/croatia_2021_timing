@@ -57,7 +57,9 @@ Rank of each split time:
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}
 split_ranks = get_split_rank(full_splits_wide, split_names) %>%
-                select(code, all_of(split_names))
+                select(code, all_of(split_names) ) %>%
+                filter_at(vars(starts_with("split_")),
+                                all_vars(! is.na(.)))
 
 split_N_col_idx = which(colnames(split_ranks) == 'split_N')[[1]]
 
@@ -135,7 +137,10 @@ ultimate_actual = full_splits_wide %>%
 Driver times compared to the first ranked recorded split time at each split:
 
 ```{r}
-formattable(ultimate_actual, align='c',
+ultimate_actual %>%
+                  filter_at(vars(starts_with("split_")),
+                                all_vars(! is.na(.)))  %>%
+formattable( align='c',
             list(area(col = 2:split_N_col_idx) ~ color_tile2(c("red",'white', "forestgreen")),
                  entryId=FALSE))
 ```
@@ -146,7 +151,10 @@ formattable(ultimate_actual, align='c',
 Split durations rebased relative to the fastest transit of each split section:
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-formattable(ultimate_between_split, align='c',
+ultimate_between_split %>%
+                  filter_at(vars(starts_with("split_")),
+                                all_vars(! is.na(.)))  %>%
+formattable(align='c',
             list(area(col = 2:split_N_col_idx) ~ color_tile2(c("red",'white',"forestgreen")),
                  entryId=FALSE))
 ```
@@ -157,9 +165,14 @@ formattable(ultimate_between_split, align='c',
 Actual split times relative to the accumulated ultimate split section times:
 
 ```{r}
-formattable(ultimate_accumulated, align='c',
+ultimate_accumulated %>%
+                  filter_at(vars(starts_with("split_")),
+                                all_vars(! is.na(.)))  %>%
+formattable( align='c',
             list(area(col = 2:split_N_col_idx) ~ color_tile2(c("red",'white', "forestgreen")),
                  entryId=FALSE))
 ```
+
+
 
 

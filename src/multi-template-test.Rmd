@@ -31,7 +31,8 @@ wrc_entries = wrc$entryId
 ```{r looper, message=FALSE, echo=FALSE, error=FALSE, warning=FALSE, results='asis'}
 
 stage_list=list("SS1", "SS2", "SS3", "SS4", "SS5", "SS6", "SS7", "SS8")
-omit_stage_splits = c("SS6")
+
+omit_stage_splits = c()
 
 #stage_list=list("SS1","SS2")
 for (stage_code in stage_list){

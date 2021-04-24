@@ -90,7 +90,7 @@ top10_stage_times %>%
 
 ```{r message=FALSE, echo=FALSE, error=FALSE, warning=FALSE, results='asis'}
 #omit_stage_splits=c("SS1")
-if (!(stage_code %in% omit_stage_splits)) {
+if (!(stage_code %in% c())){ #omit_stage_splits)) {
     template="test-template.Rmd"
     #template="empty_template.Rmd"
     src = knit_expand(template)
@@ -117,7 +117,7 @@ for (driverEntryId in wrc_entries){
                    options = list(echo=FALSE, warning=FALSE, error=FALSE),
                    quiet=TRUE))
   
-  if (!(stage_code %in% omit_stage_splits)) {
+  if (!(stage_code %in% c())){ #omit_stage_splits)) {
     template="driver_template.Rmd"
     #template="empty_template.Rmd"
     src = knit_expand(template)

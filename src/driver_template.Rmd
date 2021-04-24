@@ -7,13 +7,17 @@
 driverCode = cars[cars$entryId==driverEntryId,'code']
 driver_rebased = rebase(full_splits_wide, driverCode,
                        split_names, id_col='code') %>%
-                  select(code, all_of(split_names)) %>%
-                  filter_at(vars(starts_with("split_")),
-                                any_vars(! is.na(.)))
+                  select(code, all_of(split_names)) #%>%
+                  #filter_at(vars(starts_with("split_")),
+                  #              any_vars(! is.na(.)))
 
 split_N_col_idx = which(colnames(driver_rebased) == 'split_N')[[1]]
-formattable(driver_rebased[,c('code',split_names)], align='c',
-            list(area(col = 2:split_N_col_idx) ~ color_tile2(c("green",'white',"red")),
+
+driver_rebased[,c('code',split_names)] %>%
+                  filter_at(vars(starts_with("split_")),
+                                all_vars(! is.na(.)))  %>%
+            formattable(align='c',
+                    list(area(col = 2:split_N_col_idx) ~ color_tile2(c("green",'white',"red")),
                  entryId=FALSE))
 ```
 
@@ -30,7 +34,11 @@ driver_rebased = rebase(full_durations_wide, driverCode,
                                 any_vars(! is.na(.)))
 
 split_N_col_idx = which(colnames(driver_rebased) == 'split_N')[[1]]
-formattable(driver_rebased[,c('code',split_names)], align='c',
+
+driver_rebased[,c('code',split_names)] %>%
+                  filter_at(vars(starts_with("split_")),
+                                all_vars(! is.na(.)))  %>%
+formattable( align='c',
             list(area(col = 2:split_N_col_idx) ~ color_tile2(c("green",'white',"red")),
                  entryId=FALSE))
 ```
