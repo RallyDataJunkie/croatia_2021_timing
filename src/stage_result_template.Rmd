@@ -11,7 +11,9 @@ top10_display_cols_base = c('position', 'identifier', 'code',
                             # is the difference between a driver
                             # and the driver immediately ahead
                             'TimeInS', 'gap', 'diff')
+```
 
+```{r}
 top10_stage_times = stage_times %>%
                       # Filter required group
                       #filter(entryId %in% wrc_entries) %>%
@@ -37,7 +39,38 @@ top10_stage_times = stage_times %>%
                              Code = code,
                              `Time (s)` = TimeInS,
                              Gap = gap, Diff = diff)
+```
 
+```{r}
+group_stage_times = stage_times %>%
+                      # Filter required group
+                      filter(entryId %in% wrc_entries) %>%
+                      # A minor optimisation step to 
+                      # limit the amount of merging
+                      arrange(position) %>%
+                      #head(10) %>%
+                      # Merge in the entries data
+                      merge(cars, by='entryId')  %>%
+                      # Convert milliseconds to seconds
+                      mutate(TimeInS = elapsedDurationMs/1000,
+                             gap = diffFirstMs/1000,
+                             diff = diffPrevMs/1000)  %>%
+                      # Limit columns and set column order
+                      select(all_of(top10_display_cols_base),
+                             'entryId') %>%
+                      # The merge may upset the row order
+                      # so reset the order again
+                      arrange(position) %>%
+                      # Improve column names by renaming them
+                      rename(Pos=position,
+                             Car = identifier,
+                             Code = code,
+                             `Time (s)` = TimeInS,
+                             Gap = gap, Diff = diff)
+```
+
+
+```{r}
 stage_cols = c('stageId', 'number', 'name', 'distance', 'code')
 
 stage_info = stages %>%
@@ -48,17 +81,19 @@ stage_info = stages %>%
 #large_diff = 2
 
 top10_stage_times %>% 
+  filter(!is.na(Gap)) %>%
   formattable(list(Gap = color_bar2("#FA614B66"),
                    Diff = color_tile("#DeF7E9","#71CA97"),
                    entryId=FALSE))
 ```
 
 
-
 ```{r message=FALSE, echo=FALSE, error=FALSE, warning=FALSE, results='asis'}
-
-if (!(stage_code) %in% c("SS2", "SS6")) {
-    src = knit_expand("test-template.Rmd")
+#omit_stage_splits=c("SS1")
+if (!(stage_code %in% omit_stage_splits)) {
+    template="test-template.Rmd"
+    #template="empty_template.Rmd"
+    src = knit_expand(template)
     cat(knit_child(text=src,
                  options = list(echo=FALSE, warning=FALSE, error=FALSE),
                  quiet=TRUE))
@@ -75,13 +110,17 @@ for (driverEntryId in wrc_entries){
   driverCode = cars[cars$entryId==driverEntryId,'code']
 
   # This section is broken
-  src = knit_expand("driver_stage_template.Rmd")
+  template = "driver_stage_template.Rmd"
+  #template="empty_template.Rmd"
+  src = knit_expand(template)
   cat(knit_child(text=src,
                    options = list(echo=FALSE, warning=FALSE, error=FALSE),
                    quiet=TRUE))
   
-  if (!(stage_code) %in% c("SS2", "SS6")) {
-    src = knit_expand("driver_template.Rmd")
+  if (!(stage_code %in% omit_stage_splits)) {
+    template="driver_template.Rmd"
+    #template="empty_template.Rmd"
+    src = knit_expand(template)
     cat(knit_child(text=src,
                    options = list(echo=FALSE, warning=FALSE, error=FALSE),
                    quiet=TRUE))
@@ -89,3 +128,4 @@ for (driverEntryId in wrc_entries){
 }
 
 ```
+

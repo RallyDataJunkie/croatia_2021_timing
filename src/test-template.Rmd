@@ -5,10 +5,10 @@ Reports on splits
 ```{r results=FALSE, message=FALSE, warning=FALSE}
 #library(formattable)
 
-#stage_code = 'SS2'
+#stage_code = 'SS6'
 
 splits = get_splits(eventId, stageId)
-splits_locations = splits$splitPoints
+splits_locations = splits$splitPoints %>% arrange(number)
 splits_list = splits_locations$splitPointId
 splits_locations$splitname = sapply(splits_locations$splitPointId,
                                  get_split_label)
@@ -60,6 +60,7 @@ split_ranks = get_split_rank(full_splits_wide, split_names) %>%
                 select(code, all_of(split_names))
 
 split_N_col_idx = which(colnames(split_ranks) == 'split_N')[[1]]
+
 formattable(split_ranks, align='c',
             list(area(col = 2:split_N_col_idx) ~ color_tile2(c("red",'white', "forestgreen")),
                  entryId=FALSE))
@@ -75,7 +76,6 @@ These views provide various ways of comparing the performance of each driver to 
 - fastest time going from one split to the next (*ultimate sections*): gives an estimate of how quickly each driver completed each split section relative to the quickest time recorded completing that split section (time taken to go from one split point to the next);
 - *accumulated ultimate sections* times: gives and estimate of how quickly the driver is going relative to the fastest possible completion of the stage based on accumulated ultimate split section times.
 
-
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ultimate_splits_long = full_durations_wide %>%
                      pivot_longer(all_of(split_names),
@@ -83,7 +83,7 @@ ultimate_splits_long = full_durations_wide %>%
                                   values_to = "sectionDurationS") %>%
                      select(splitname, sectionDurationS) %>%
                      # Defensive measure
-                     filter(!is.na(sectionDurationS) & sectionDurationS>0) %>%
+                     #filter(!is.na(sectionDurationS) & sectionDurationS>0) %>%
                      group_by(splitname) %>% 
                      summarise(ultimate = min(sectionDurationS,
                                               na.rm = TRUE)) %>%

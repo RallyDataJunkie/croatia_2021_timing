@@ -3,10 +3,15 @@
 Stage report for `r driverCode`.
 
 ```{r echo=FALSE, message=FALSE, error=FALSE, results='asis'}
-driver_rebased_gap = rebase(top10_stage_times, driverCode, rebase_cols,
-                           id_col='Code')
+#driverCode="KAT"
+driver_rebased_gap =  group_stage_times %>%
+                        #filter_at(vars(starts_with("split_")),
+                        #          any_vars(! is.na(.))) %>% 
+                          rebase( driverCode, rebase_cols,
+                                  id_col='Code')
 
 driver_rebased_gap %>%
+  filter(!is.na(Gap)) %>%
   formattable(align='c',
               list(Gap = pm_color_bar2(),
                    entryId=FALSE))
