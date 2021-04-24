@@ -84,7 +84,7 @@ get_split_rank = function(df, split_cols){
   # We need to drop any list names
   split_names = as.character(split_names)
   
-  df %>% mutate(across( split_cols, dense_rank ))
+  df %>% mutate(across( all_of(split_cols), dense_rank ))
 }
 
 xnormalize = function(x){

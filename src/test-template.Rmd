@@ -68,6 +68,17 @@ formattable(split_ranks, align='c',
                  entryId=FALSE))
 ```
 
+Rank on each split section:
+
+```{r}
+split_duration_ranks = get_split_rank(full_durations_wide, split_names)
+
+formattable(split_ranks, align='c',
+            list(area(col = 2:split_N_col_idx) ~ color_tile2(c("red",'white', "forestgreen")),
+                 entryId=FALSE))
+```
+
+```{t}
 ### Ultimate Stage Comparisons
 
 Split time comparisons relative to various ultimage stage time calculations.
