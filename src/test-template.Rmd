@@ -63,9 +63,11 @@ split_ranks = get_split_rank(full_splits_wide, split_names) %>%
 
 split_N_col_idx = which(colnames(split_ranks) == 'split_N')[[1]]
 
+caption = paste0(stage_info_$code, ' split time rank')
+
 formattable(split_ranks, align='c',
             list(area(col = 2:split_N_col_idx) ~ color_tile2(c("red",'white', "forestgreen")),
-                 entryId=FALSE))
+                 entryId=FALSE), caption=caption)
 ```
 
 Rank on each split section:
@@ -73,9 +75,10 @@ Rank on each split section:
 ```{r}
 split_duration_ranks = get_split_rank(full_durations_wide, split_names)
 
+caption = paste0(stage_info_$code, ' split section rank')
 formattable(split_ranks, align='c',
             list(area(col = 2:split_N_col_idx) ~ color_tile2(c("red",'white', "forestgreen")),
-                 entryId=FALSE))
+                 entryId=FALSE), caption=caption)
 ```
 
 ```{t}
@@ -148,12 +151,13 @@ ultimate_actual = full_splits_wide %>%
 Driver times compared to the first ranked recorded split time at each split:
 
 ```{r}
+caption = paste0(stage_info_$code, ' ultimate split actual deltas')
 ultimate_actual %>%
                   filter_at(vars(starts_with("split_")),
                                 all_vars(! is.na(.)))  %>%
 formattable( align='c',
             list(area(col = 2:split_N_col_idx) ~ color_tile2(c("red",'white', "forestgreen")),
-                 entryId=FALSE))
+                 entryId=FALSE), caption=caption)
 ```
 
 
@@ -162,12 +166,13 @@ formattable( align='c',
 Split durations rebased relative to the fastest transit of each split section:
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
+caption = paste0(stage_info_$code, ' ultimate section deltas')
 ultimate_between_split %>%
                   filter_at(vars(starts_with("split_")),
                                 all_vars(! is.na(.)))  %>%
 formattable(align='c',
             list(area(col = 2:split_N_col_idx) ~ color_tile2(c("red",'white',"forestgreen")),
-                 entryId=FALSE))
+                 entryId=FALSE), caption=caption)
 ```
 
 
@@ -176,12 +181,13 @@ formattable(align='c',
 Actual split times relative to the accumulated ultimate split section times:
 
 ```{r}
+caption = paste0(stage_info_$code, ' accumulated ultimate section deltas')
 ultimate_accumulated %>%
                   filter_at(vars(starts_with("split_")),
                                 all_vars(! is.na(.)))  %>%
 formattable( align='c',
             list(area(col = 2:split_N_col_idx) ~ color_tile2(c("red",'white', "forestgreen")),
-                 entryId=FALSE))
+                 entryId=FALSE), caption=caption)
 ```
 
 

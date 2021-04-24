@@ -13,12 +13,13 @@ driver_rebased = rebase(full_splits_wide, driverCode,
 
 split_N_col_idx = which(colnames(driver_rebased) == 'split_N')[[1]]
 
+caption = paste0(stage_info_$code, ' split delta — ', driverCode)
 driver_rebased[,c('code',split_names)] %>%
                   filter_at(vars(starts_with("split_")),
                                 all_vars(! is.na(.)))  %>%
             formattable(align='c',
                     list(area(col = 2:split_N_col_idx) ~ color_tile2(c("green",'white',"red")),
-                 entryId=FALSE))
+                 entryId=FALSE), caption=caption )
 ```
 
 ### Within-Split Duration Deltas
@@ -35,11 +36,12 @@ driver_rebased = rebase(full_durations_wide, driverCode,
 
 split_N_col_idx = which(colnames(driver_rebased) == 'split_N')[[1]]
 
+caption = paste0(stage_info_$code, ' split section delta — ', driverCode)
 driver_rebased[,c('code',split_names)] %>%
                   filter_at(vars(starts_with("split_")),
                                 all_vars(! is.na(.)))  %>%
 formattable( align='c',
             list(area(col = 2:split_N_col_idx) ~ color_tile2(c("green",'white',"red")),
-                 entryId=FALSE))
+                 entryId=FALSE), caption=caption)
 ```
 
