@@ -101,8 +101,6 @@ multi_stage_long_pos = multi_stage_wide_pos %>%
                           mutate(Stage = factor(Stage,
                                                 levels = stage_codes))
 
-pos_range = 1:max(multi_stage_long_pos$Pos)
-
 # TO DO - add Overall with coloured background?
 #formattable(multi_stage_wide_pos, align='c',
 #                  list(area(col = stage_codes) ~ highlight_first())) 
