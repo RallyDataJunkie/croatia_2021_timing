@@ -18,6 +18,25 @@ highlight_first =  function (...)
                                        style()))
 }
 
+coldiffs = function(df, cols, dropfirst=FALSE, firstcol=NULL){
+  cols = as.character(cols)
+  # [-1] drops the first column, [-ncol()] drops the last
+  df_ = df[,cols][-1] - df[,cols][-ncol(df[,cols])]
+  
+  # The split time to the first split is simply the first split time
+  df_[cols[1]] = df[cols[1]]
+  # Return the dataframe in a sensible column order
+  df_ = df_ %>% select(cols)
+  
+  if (!is.null(firstcol))
+    df_[, cols[1]] = firstcol
+  
+  if (dropfirst)
+    df_[,cols][-1]
+  else
+    df_
+}
+
 spark_df = function(df){
   # We need to create an htmlwidget form of the table
   out = as.htmlwidget(formattable(df))

@@ -170,9 +170,37 @@ multi_stage_wide_pos$stage_poschart = gt_stage_pos_plots
 ```
 
 ```{r}
-multi_overall_wide_pos_$overall_poschart = gt_overall_pos_plots
+#position changes
+pos_codes = multi_overall_wide_pos_$code
+pos_diffs = multi_overall_wide_pos_ %>% 
+                select(-code) %>%
+                coldiffs(stage_codes,firstcol=0)
+pos_diffs$code = pos_codes
+
+# Reorder the columns by moving last column to first
+#pos_diffs = pos_diffs %>% select('code', everything())
+
+pos_gains = pos_diffs
+pos_gains[,stage_codes] = -pos_gains[,stage_codes]
+
+pos_gain_long_top10 <- pos_gains %>%
+                              head(10) %>%
+                              gather(key ="Stage",
+                                     value ="PosChange",
+                                      stage_codes)
+
+pos_gain_sparkline_top10 <- pos_gain_long_top10 %>%
+                                group_by(code) %>%
+                                summarize(spk_ = spk_chr(PosChange,
+                                                         type ="bar")) %>%
+                            rename(pos_change_bar=spk_)
+
+#pos_gain_sparkline_top10 %>% spark_df()
 ```
 
+```{r}
+multi_overall_wide_pos_$overall_poschart = gt_overall_pos_plots
+```
 
 ### Rally Sparkline Summary
 
@@ -182,9 +210,12 @@ Simple summary charts of rally progress for each driver, ordered by latest overa
 multi_overall_wide_gap_top10['code'] %>%
     inner_join(multi_overall_wide_pos_[,c('code','overall_poschart')], by = 'code') %>%
     inner_join(overall_long_gap_top10, by = 'code') %>%  
+      inner_join(pos_gain_sparkline_top10[, c('code','pos_change_bar')], by = 'code') %>%
    inner_join(multi_stage_wide_pos[,c('code','stage_poschart')], by = 'code') %>%
   inner_join(multi_stage_long_gap[, c('code','gap_to_stagewinner_bar')], by = 'code') %>%
-
+  rename("Overall Pos"=overall_poschart, "Overall Gap"=overall_gap_bar,
+         "Stage Pos"=stage_poschart, "Stage Gap"=gap_to_stagewinner_bar,
+         "Overall Pos Change"=pos_change_bar) %>%
   spark_df()
 ```
 
