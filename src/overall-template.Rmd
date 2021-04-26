@@ -37,7 +37,7 @@ multi_overall_wide_gap = multi_overall_results %>%
 clean_top10 = function(df) {
   df %>% relabel_times_df(stage_list_codes, cars) %>%
           dplyr::arrange(!!as.symbol(stage_codes[length(stage_codes)])) %>%
-          head(10)
+          head(20)
 }          
 
 multi_stage_times = get_multi_stage_times(stage_list_codes)
@@ -80,7 +80,11 @@ multi_overall_wide_gap_top10 = multi_overall_wide_gap %>%
                               map_stage_codes(stage_list_codes) %>%
                               map_driver_names(cars) %>%
                       dplyr::arrange(!!as.symbol(stage_codes[length(stage_codes)])) %>%
-                      head(10)
+      # TO DO - filter on entryID NOT code - du0licates etc NEU
+      # Hackfix limit on top 20 for pool for now...
+      head(20) %>%
+      filter(code %in% out_table$code) 
+                      #head(10)
 
 #kable(multi_overall_wide_gap_top10)
 kable(multi_overall_wide_gap_top10, format = "html") %>%
@@ -129,6 +133,8 @@ multi_stage_wide_gap = multi_stage_times %>%
                                                          'diffFirstS')  %>%
                             relabel_times_df(stage_list_codes, cars) %>%
           dplyr::arrange(!!as.symbol(stage_codes[length(stage_codes)])) %>%
+  # Hackfix - name  duplicate
+  head(20) %>%
   filter(code %in% overall_long_gap_top10$code) 
 
 multi_stage_long_gap = generate_spark_bar(multi_stage_wide_gap) %>%
@@ -166,7 +172,7 @@ for (c in 1:length(top10_codes)){
                       embed=T, aspect_ratio=3, size=5)
 }
 
-multi_stage_wide_pos$stage_poschart = gt_stage_pos_plots
+multi_overall_wide_pos_$stage_poschart = gt_stage_pos_plots
 ```
 
 ```{r}
@@ -211,7 +217,7 @@ multi_overall_wide_gap_top10['code'] %>%
     inner_join(multi_overall_wide_pos_[,c('code','overall_poschart')], by = 'code') %>%
     inner_join(overall_long_gap_top10, by = 'code') %>%  
       inner_join(pos_gain_sparkline_top10[, c('code','pos_change_bar')], by = 'code') %>%
-   inner_join(multi_stage_wide_pos[,c('code','stage_poschart')], by = 'code') %>%
+   inner_join(multi_overall_wide_pos_[,c('code','stage_poschart')], by = 'code') %>%
   inner_join(multi_stage_long_gap[, c('code','gap_to_stagewinner_bar')], by = 'code') %>%
   rename("Overall Pos"=overall_poschart, "Overall Gap"=overall_gap_bar,
          "Stage Pos"=stage_poschart, "Stage Gap"=gap_to_stagewinner_bar,
